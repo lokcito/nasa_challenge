@@ -26,7 +26,7 @@ class WeatherCardWidget extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
           Text(
-            "Soleado",
+            "Soleados",
             style: TextStyle(color: Colors.white),
           ),
           Row(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_challenge/pages/prediction.dart';
 import 'package:nasa_challenge/pages/weather.dart';
+
 //https://colorhunt.co/palette/7c93c355679c1e2a5ee1d7b7
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const WeatherScreen();
+        return WeatherScreen();
       },
       routes: <RouteBase>[
         GoRoute(

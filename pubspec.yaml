@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   go_router: ^14.3.0
+  intl: ^0.18.0  # Asegúrate de usar la última versión
 
 dev_dependencies:
   flutter_test:
