@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_challenge/pages/prediction.dart';
 import 'package:nasa_challenge/pages/weather.dart';
+import 'dart:html' as html;
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 //https://colorhunt.co/palette/7c93c355679c1e2a5ee1d7b7
 void main() {

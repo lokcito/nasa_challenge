@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nasa_challenge/models/day.model.dart';
 import 'package:nasa_challenge/widgets/date.dart';
 import 'package:nasa_challenge/widgets/day.bar.dart';
 import 'package:nasa_challenge/widgets/day.slider.dart';
+import 'dart:html' as html;
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:nasa_challenge/widgets/locator.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -41,8 +47,25 @@ class _WeatherScreenState extends State<WeatherScreen> {
     }
   }
 
+  void _showMapDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Container(
+            width: double.infinity,
+            height: 400,
+            child: Container(
+              child: MapSample(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   _selectLocation(BuildContext context) {
-    print("local");
+    _showMapDialog(context);
   }
 
   List<DayModel> getWeekDates(DateTime date) {
@@ -158,27 +181,63 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 }
 
+class MapSample extends StatefulWidget {
+  @override
+  State<MapSample> createState() => MapSampleState();
+}
 
+class MapSampleState extends State<MapSample> {
+  Completer<GoogleMapController> _controller = Completer();
+  final Locator locator = Locator();
 
-// /// The home screen
-// class WeatherScreen extends StatelessWidget {
-//   // DateTime selectedDate = DateTime.now();
-//   /// Constructs a [WeatherScreen]
-//   const WeatherScreen({super.key});
+  static final CameraPosition _UzhNU = CameraPosition(
+    target: LatLng(48.6075588, 22.2641117),
+    zoom: 15,
+  );
 
-//   _selectDate(BuildContext context) async {
-//     DateTime selectedDate = DateTime.now();
-//     final DateTime? picked = await showDatePicker(
-//       context: context,
-//       initialDate: selectedDate, // Refer step 1
-//       firstDate: DateTime(2000),
-//       lastDate: DateTime(2025),
-//     );
-//     if (picked != null && picked != selectedDate) {}
-//     // setState(() {
-//     //   selectedDate = picked;
-//     // });
-//   }
+  MapType _currentMapType = MapType.normal;
 
-  
-// }
+  void _onMapType() {
+    setState(() {
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text('Google Maps Example'),
+        backgroundColor: Colors.green,
+      ),
+      body: Stack(
+        children: [
+          StreamBuilder<Set<Marker>>(
+              stream: locator.markerStream,
+              builder: (context, snapshot) {
+                return GoogleMap(
+                  mapType: _currentMapType,
+                  initialCameraPosition: _UzhNU,
+                  onMapCreated: locator.onMapCreated,
+                  markers: snapshot.data ?? {},
+                );
+              }),
+          Padding(
+            padding: EdgeInsets.all(18),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: FloatingActionButton(
+                onPressed: _onMapType,
+                materialTapTargetSize: MaterialTapTargetSize.padded,
+                backgroundColor: Colors.green,
+                child: Icon(Icons.map, size: 36),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
