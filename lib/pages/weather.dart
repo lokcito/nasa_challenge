@@ -13,6 +13,17 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   DateTime? selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      selectedDate = DateTime.now();
+      weekDates = getWeekDates(selectedDate!);
+    });
+  }
+
   List<DayModel> weekDates = [];
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -72,7 +83,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     ElevatedButton(
                         onPressed: () => {_selectLocation(context)},
                         child: Text("Seleccione localidad")),
-                    DateWidget(),
+                    DateWidget(
+                      n_day: this.selectedDate == null
+                          ? 0
+                          : this.selectedDate!.day,
+                    ),
                     ElevatedButton(
                         onPressed: () => {_selectDate(context)},
                         child: Text(selectedDate == null
