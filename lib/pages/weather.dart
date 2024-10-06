@@ -143,7 +143,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             child: Column(
                               children: [
                                 const Text(
-                                  "Paso 1",
+                                  "Step 1",
                                   style: TextStyle(
                                       color: Color(0XFF2E073F),
                                       fontSize: 24,
@@ -188,24 +188,24 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
                               children: [
                                 const Text(
-                                  "Paso 2",
+                                  "Step 2",
                                   style: TextStyle(
                                       color: Color(0XFFFFFFFF),
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const Text(
-                                  "Indique la fecha ",
+                                  "Select the date",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 const Text(
-                                  "que planea cultivar.",
+                                  "you plan to grow.",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 ElevatedButton(
                                     onPressed: () => {_selectDate(context)},
                                     child: Text(selectedDate == null
-                                        ? "Seleccione una fecha"
+                                        ? "Choose date"
                                         : '${DateFormat('yyyy-MM-dd').format(selectedDate!)}')),
                               ],
                             ),
@@ -247,7 +247,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     const Text(
-                                      "Pronostico segun la NASA",
+                                      "Forecast according to NASA",
                                       style: TextStyle(
                                           color: Color(0XFF2E073F),
                                           fontSize: 20,
@@ -259,7 +259,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   children: [
                                     Image.asset("images/drop.png"),
                                     const Text(
-                                      "Precipitacion Acumulada. 2281.17 mm",
+                                      "Accumulated Precipitation 2281.17 mm",
                                       style: TextStyle(
                                           color: Color(0XFF2E073F),
                                           fontSize: 20,
@@ -271,7 +271,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   children: [
                                     Image.asset("images/sun.png"),
                                     const Text(
-                                      "Temperatura Prom.: 21.0 °C - 27.0 °C",
+                                      "Average Temp: 21.0 °C - 27.0 °C",
                                       style: TextStyle(
                                           color: Color(0XFF2E073F),
                                           fontSize: 24,
@@ -313,7 +313,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             child: Column(
                               children: [
                                 const Text(
-                                  "Sugerencias",
+                                  "Suggestions",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
