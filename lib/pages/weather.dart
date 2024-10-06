@@ -107,10 +107,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         onPressed: () => {_selectLocation(context)},
                         child: Text("Seleccione localidad")),
                     DateWidget(
-                      n_day: this.selectedDate == null
-                          ? 0
-                          : this.selectedDate!.day,
-                    ),
+                        date: selectedDate == null
+                            ? DateTime.now()
+                            : selectedDate!),
                     ElevatedButton(
                         onPressed: () => {_selectDate(context)},
                         child: Text(selectedDate == null
