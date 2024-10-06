@@ -8,18 +8,18 @@ class WeatherCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 8, bottom: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Color(0XFF5925DC), Color(0XFF6636df)],
           stops: [0.5, 0.5], // 50% para cada color
         ),
-        color: Color(0XFF896DE9), // Color de fondo del container
+        color: const Color(0XFF896DE9), // Color de fondo del container
         borderRadius: BorderRadius.circular(20), // Borde redondeado
       ),
-      child: Column(
+      child: const Column(
         children: [
           Text(
             "190",
