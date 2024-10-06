@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: _router,
       theme: ThemeData(
-        primaryColor:
-            Color(0xFF123456), // Cambiar el color principal a uno específico
+        primaryColor: const Color(
+            0xFF123456), // Cambiar el color principal a uno específico
       ),
     );
   }

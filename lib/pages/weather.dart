@@ -55,7 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         return Dialog(
           child: ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 height: 400,
                 child: SizedBox(
