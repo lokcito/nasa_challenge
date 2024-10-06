@@ -162,20 +162,14 @@ class MapSampleState extends State<MapSample> {
   Completer<GoogleMapController> _controller = Completer();
   final Locator locator = Locator();
 
+  MapType _currentMapType = MapType.normal;
+
   static final CameraPosition _UzhNU = CameraPosition(
     target: LatLng(48.6075588, 22.2641117),
     zoom: 15,
   );
 
-  MapType _currentMapType = MapType.normal;
-
-  void _onMapType() {
-    setState(() {
-      _currentMapType = _currentMapType == MapType.normal
-          ? MapType.satellite
-          : MapType.normal;
-    });
-  }
+  //MapType _currentMapType = MapType.normal;
 
   void _addMarker(LatLng position) {
     locator.askCreate(context, position);
@@ -202,16 +196,39 @@ class MapSampleState extends State<MapSample> {
           StreamBuilder<Set<Marker>>(
               stream: locator.markerStream,
               builder: (context, snapshot) {
-                print(":D :D");
                 return GoogleMap(
                   mapType: _currentMapType,
                   onTap: _addMarker,
                   initialCameraPosition: _UzhNU,
-                  onMapCreated: locator.onMapCreated,
+                  onMapCreated: (GoogleMapController e) {
+                    locator.onMapCreated(e);
+                  },
                   markers: snapshot.data ?? {},
                   polygons: {locator.polygon},
                 );
               }),
+          Padding(
+            padding: EdgeInsets.all(18),
+            child: Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  child: Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () => {},
+                        materialTapTargetSize: MaterialTapTargetSize.padded,
+                        backgroundColor: Colors.purple,
+                        child: Text("Analizar"),
+                      ),
+                      Container(
+                        width: 192,
+                        color: Colors.white,
+                        child: Text("Area: ${locator.totalArea} metros"),
+                      ),
+                    ],
+                  ),
+                )),
+          ),
           /*Padding(
             padding: EdgeInsets.all(18),
             child: Align(

@@ -94,10 +94,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 
 class Locator {
   late GoogleMapController mapController;
-
+  String totalArea = "";
   final Polygon polygon = Polygon(
     polygonId: PolygonId('test_polygon'),
     points: [],
@@ -155,6 +156,39 @@ class Locator {
     _streamController.add(markers.values.toSet());
   }
 
+  double calculatePolygonArea(List<LatLng> points) {
+    print("Número de puntos: ${points.length}");
+    if (points.length < 3) return 0.0; // No se puede formar un polígono
+
+    double area = 0.0;
+    int n = points.length;
+
+    for (int i = 0; i < n; i++) {
+      int j = (i + 1) % n; // Vértice siguiente
+      area += points[i].latitude * points[j].longitude;
+      area -= points[j].latitude * points[i].longitude;
+    }
+
+    area = area.abs() / 2.0;
+
+    // Convertir de grados cuadrados a metros cuadrados
+    // Supongamos que tomamos la latitud media de los puntos
+    double averageLatitude =
+        points.map((p) => p.latitude).reduce((a, b) => a + b) / n;
+    double metersPerDegreeLongitude = 111320 * cos(averageLatitude * pi / 180);
+    double metersPerDegreeLatitude = 111320; // 1 grado de latitud en metros
+
+    // Área en metros cuadrados
+    double areaInSquareMeters =
+        area * metersPerDegreeLongitude * metersPerDegreeLatitude;
+
+    // Redondear y formatear el área
+    String formattedArea = NumberFormat('#,##0.00').format(areaInSquareMeters);
+    print('Área del polígono: $formattedArea metros cuadrados');
+    totalArea = formattedArea;
+    return areaInSquareMeters;
+  }
+
   void markerCreate() {
     final marker = Marker(
       markerId: MarkerId('currentLocation'),
@@ -170,6 +204,8 @@ class Locator {
 
     polygon.points.add(xposition); // Punto 1
 
+    calculatePolygonArea(polygon.points);
+
     BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(24, 24)), // Tamaño del icono
       'assets/images/icon_circulo.png', // Ruta del icono
@@ -180,9 +216,7 @@ class Locator {
       position: xposition,
       icon: customIcon, // Color del icono del marcador
       draggable: true,
-      onTap: () => {
-        _showDeleteDialog(context, '$xposition')
-      },
+      onTap: () => {_showDeleteDialog(context, '$xposition')},
     );
 
     markers[MarkerId(randomx)] = marker;
@@ -190,7 +224,8 @@ class Locator {
 
     // return "";
   }
-void _showDeleteDialog(BuildContext context, String markerId) {
+
+  void _showDeleteDialog(BuildContext context, String markerId) {
     showDialog(
       context: context,
       builder: (context) {
@@ -201,7 +236,7 @@ void _showDeleteDialog(BuildContext context, String markerId) {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
-                                Navigator.of(context).pop(false); // Retorna false al cancelar
+                Navigator.of(context).pop(false); // Retorna false al cancelar
               },
               child: Text('Cancel'),
             ),
