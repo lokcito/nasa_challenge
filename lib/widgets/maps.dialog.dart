@@ -13,13 +13,23 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:nasa_challenge/widgets/locator.dart';
 
 class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+  final Function(String) onMessageSend;
+
+  MapSample({Key? key, required this.onMessageSend}) : super(key: key);
+
+  // const MapSample({super.key});
 
   @override
   State<MapSample> createState() => MapSampleState();
 }
 
 class MapSampleState extends State<MapSample> {
+  String data = "Hola desde MyWidget";
+
+  String getData() {
+    return data;
+  }
+
   Completer<GoogleMapController> _controller = Completer();
   final Locator locator = Locator();
   final MapType _currentMapType = MapType.normal;
@@ -63,7 +73,8 @@ class MapSampleState extends State<MapSample> {
                   child: Column(
                     children: [
                       FloatingActionButton(
-                        onPressed: () => {},
+                        onPressed: () =>
+                            {widget.onMessageSend(locator.totalArea)},
                         materialTapTargetSize: MaterialTapTargetSize.padded,
                         backgroundColor: Colors.purple,
                         child: Text("Analizar"),
@@ -71,24 +82,12 @@ class MapSampleState extends State<MapSample> {
                       Container(
                         width: 192,
                         color: Colors.white,
-                        child: Text("Area: ${locator.totalArea} metros"),
+                        child: Text("Area: ${locator.totalArea} m²"),
                       ),
                     ],
                   ),
                 )),
           ),
-          /*Padding(
-            padding: EdgeInsets.all(18),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: FloatingActionButton(
-                onPressed: _onMapType,
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                backgroundColor: Colors.purple,
-                child: Icon(Icons.map, size: 36),
-              ),
-            ),
-          ),*/
         ],
       ),
     );

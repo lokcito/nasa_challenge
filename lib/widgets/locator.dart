@@ -172,7 +172,7 @@ class Locator {
   }
 
   double calculatePolygonArea(List<LatLng> points) {
-    print("Número de puntos: ${points.length}");
+    print("Número de puntos: ${points}");
     if (points.length < 3) return 0.0; // No se puede formar un polígono
 
     double area = 0.0;
@@ -199,8 +199,9 @@ class Locator {
 
     // Redondear y formatear el área
     String formattedArea = NumberFormat('#,##0.00').format(areaInSquareMeters);
-    print('Área del polígono: $formattedArea metros cuadrados');
-    totalArea = formattedArea;
+    //print('Área del polígono: $formattedArea metros cuadrados');
+    this.totalArea = formattedArea;
+    print(this.totalArea);
     return areaInSquareMeters;
   }
 
