@@ -145,13 +145,28 @@ class Locator {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
+    final String mapStyle = '''
+  [
+    {
+      "featureType": "park",
+      "elementType": "labels",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    }
+  ]
+  ''';
+
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     //return await Geolocator.getCurrentPosition();
+    mapController.setMapStyle(mapStyle);
     Position position = await Geolocator.getCurrentPosition();
     this.position = position;
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(position.latitude, position.longitude), zoom: 15)));
+        target: LatLng(position.latitude, position.longitude), zoom: 20)));
     markerCreate();
     _streamController.add(markers.values.toSet());
   }

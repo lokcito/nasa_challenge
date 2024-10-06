@@ -11,6 +11,7 @@ import 'package:nasa_challenge/widgets/day.slider.dart';
 import 'dart:html' as html;
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:nasa_challenge/widgets/locator.dart';
+import 'package:nasa_challenge/widgets/maps.dialog.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override
@@ -52,13 +53,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: SizedBox(
-            width: double.infinity,
-            height: 400,
-            child: SizedBox(
-              child: MapSample(),
-            ),
-          ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 400,
+                child: SizedBox(
+                  child: MapSample(),
+                ),
+              )),
         );
       },
     );
@@ -149,99 +152,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ],
           ),
         ));
-  }
-}
-
-class MapSample extends StatefulWidget {
-  @override
-  State<MapSample> createState() => MapSampleState();
-}
-
-class MapSampleState extends State<MapSample> {
-  Completer<GoogleMapController> _controller = Completer();
-  final Locator locator = Locator();
-
-  MapType _currentMapType = MapType.normal;
-
-  static final CameraPosition _UzhNU = CameraPosition(
-    target: LatLng(48.6075588, 22.2641117),
-    zoom: 15,
-  );
-
-  //MapType _currentMapType = MapType.normal;
-
-  void _addMarker(LatLng position) {
-    locator.askCreate(context, position);
-    setState(() {
-      // markers.add(
-      //   Marker(
-      //     markerId: MarkerId(position.toString()),
-      //     position: position,
-      //     infoWindow: InfoWindow(title: 'Ubicación seleccionada'),
-      //   ),
-      // );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-        title: const Text('Seleccione una localizacion: '),
-        backgroundColor: const Color(0XFF896DE9),
-      ),
-      body: Stack(
-        children: [
-          StreamBuilder<Set<Marker>>(
-              stream: locator.markerStream,
-              builder: (context, snapshot) {
-                return GoogleMap(
-                  mapType: _currentMapType,
-                  onTap: _addMarker,
-                  initialCameraPosition: _UzhNU,
-                  onMapCreated: (GoogleMapController e) {
-                    locator.onMapCreated(e);
-                  },
-                  markers: snapshot.data ?? {},
-                  polygons: {locator.polygon},
-                );
-              }),
-          Padding(
-            padding: EdgeInsets.all(18),
-            child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: Column(
-                    children: [
-                      FloatingActionButton(
-                        onPressed: () => {},
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                        backgroundColor: Colors.purple,
-                        child: Text("Analizar"),
-                      ),
-                      Container(
-                        width: 192,
-                        color: Colors.white,
-                        child: Text("Area: ${locator.totalArea} metros"),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-          /*Padding(
-            padding: EdgeInsets.all(18),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: FloatingActionButton(
-                onPressed: _onMapType,
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                backgroundColor: Colors.purple,
-                child: Icon(Icons.map, size: 36),
-              ),
-            ),
-          ),*/
-        ],
-      ),
-    );
   }
 }
