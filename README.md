@@ -1,4 +1,4 @@
-# nasa_challenge
+# Flutter App QuinuaEstellar for agriculure use - Team Rocket NASA Challenge Junin 2024
 
 A new Flutter project.
 
