@@ -205,12 +205,25 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
+  void _addMarker(LatLng position) {
+    locator.askCreate(position);
+    setState(() {
+      // markers.add(
+      //   Marker(
+      //     markerId: MarkerId(position.toString()),
+      //     position: position,
+      //     infoWindow: InfoWindow(title: 'Ubicación seleccionada'),
+      //   ),
+      // );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text('Google Maps Example'),
-        backgroundColor: Colors.green,
+        title: const Text('Seleccione una localizacion: '),
+        backgroundColor: const Color(0XFF896DE9),
       ),
       body: Stack(
         children: [
@@ -219,23 +232,24 @@ class MapSampleState extends State<MapSample> {
               builder: (context, snapshot) {
                 return GoogleMap(
                   mapType: _currentMapType,
+                  onTap: _addMarker,
                   initialCameraPosition: _UzhNU,
                   onMapCreated: locator.onMapCreated,
                   markers: snapshot.data ?? {},
                 );
               }),
-          Padding(
+          /*Padding(
             padding: EdgeInsets.all(18),
             child: Align(
               alignment: Alignment.topRight,
               child: FloatingActionButton(
                 onPressed: _onMapType,
                 materialTapTargetSize: MaterialTapTargetSize.padded,
-                backgroundColor: Colors.green,
+                backgroundColor: Colors.purple,
                 child: Icon(Icons.map, size: 36),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );
