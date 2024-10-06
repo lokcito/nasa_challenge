@@ -24,7 +24,7 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  String data = "Hola desde MyWidget";
+  String data = "-";
 
   String getData() {
     return data;
@@ -46,7 +46,7 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: const Text('Seleccione una localizacion: '),
+        title: const Text('Select a location: '),
         backgroundColor: const Color(0XFF896DE9),
       ),
       body: Stack(
@@ -77,7 +77,7 @@ class MapSampleState extends State<MapSample> {
                             {widget.onMessageSend(locator.totalArea)},
                         materialTapTargetSize: MaterialTapTargetSize.padded,
                         backgroundColor: Colors.purple,
-                        child: Text("Analizar"),
+                        child: Text("Analyze"),
                       ),
                       Container(
                         width: 192,

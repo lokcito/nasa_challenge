@@ -162,7 +162,7 @@ class Locator {
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
     //return await Geolocator.getCurrentPosition();
-    mapController.setMapStyle(mapStyle);
+    // mapController.setMapStyle(mapStyle);
     Position position = await Geolocator.getCurrentPosition();
     this.position = position;
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
