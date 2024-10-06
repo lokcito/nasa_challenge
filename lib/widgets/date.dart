@@ -9,28 +9,28 @@ class DateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const List<String> diasDeLaSemana = [
-      'domingo', // 0
-      'lunes', // 1
-      'martes', // 2
-      'miércoles', // 3
-      'jueves', // 4
-      'viernes', // 5
-      'sábado', // 6
-      'domingo', // 0
+      'Sunday', // 0
+      'Monday', // 1
+      'Tuesday', // 2
+      'Wennesday', // 3
+      'Thursday', // 4
+      'Friday', // 5
+      'Saturday', // 6
+      'Sunday', // 0
     ];
     const List<String> meses = [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'julio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre'
+      'January',
+      'Febrero',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
     ];
 
     return Row(children: [

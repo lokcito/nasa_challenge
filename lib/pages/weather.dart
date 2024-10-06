@@ -151,7 +151,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 ),
                                 ElevatedButton(
                                     onPressed: () => {_selectLocation(context)},
-                                    child: Text("Seleccione localidad")),
+                                    child: Text("Select location")),
                                 Text(
                                   '$landArea m²',
                                   style: TextStyle(color: Colors.white),
@@ -368,7 +368,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                DaySliderWidget()
               ],
             ))),
         bottomNavigationBar: BottomAppBar(
