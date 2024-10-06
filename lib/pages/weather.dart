@@ -52,10 +52,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             height: 400,
-            child: Container(
+            child: SizedBox(
               child: MapSample(),
             ),
           ),
@@ -116,7 +116,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         child: Text(selectedDate == null
                             ? "Seleccione una fecha"
                             : '${DateFormat('yyyy-MM-dd').format(selectedDate!)}')),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                   ],
@@ -151,34 +151,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
         ));
   }
-
-  @override
-  Widget buixld(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Selector de Fecha'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              selectedDate == null
-                  ? 'No has seleccionado ninguna fecha.'
-                  : 'Fecha seleccionada: ${selectedDate!.toLocal()}'
-                      .split(' ')[0],
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Seleccionar fecha'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class MapSample extends StatefulWidget {
@@ -206,7 +178,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   void _addMarker(LatLng position) {
-    locator.askCreate(position);
+    locator.askCreate(context, position);
     setState(() {
       // markers.add(
       //   Marker(
@@ -230,12 +202,14 @@ class MapSampleState extends State<MapSample> {
           StreamBuilder<Set<Marker>>(
               stream: locator.markerStream,
               builder: (context, snapshot) {
+                print(":D :D");
                 return GoogleMap(
                   mapType: _currentMapType,
                   onTap: _addMarker,
                   initialCameraPosition: _UzhNU,
                   onMapCreated: locator.onMapCreated,
                   markers: snapshot.data ?? {},
+                  polygons: {locator.polygon},
                 );
               }),
           /*Padding(
